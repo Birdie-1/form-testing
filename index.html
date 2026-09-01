@@ -3,157 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register for the Expedition — Eldoria</title>
+    <title>Eldoria Expedition — Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <p class="student-id">นายนฤบดี บุญมา 66040233145</p>
-    </header>
 
-    <main>
-        <h1>Register for the expedition in search of Eldoria</h1>
-        <p class="subtitle">Fill in your details to join the archaeological expedition. Fields marked with <span class="required-mark">*</span> are required.</p>
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar">
+        <a href="#" class="nav-logo">
+            <svg class="compass-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <polygon points="12,2 14.5,9.5 12,8 9.5,9.5" fill="currentColor" stroke="none"/>
+                <polygon points="12,22 9.5,14.5 12,16 14.5,14.5" fill="currentColor" stroke="none" opacity="0.4"/>
+                <polygon points="2,12 9.5,9.5 8,12 9.5,14.5" fill="currentColor" stroke="none" opacity="0.4"/>
+                <polygon points="22,12 14.5,14.5 16,12 14.5,9.5" fill="currentColor" stroke="none" opacity="0.4"/>
+            </svg>
+            ELDORIA
+        </a>
+        <div class="nav-links">
+            <a href="#">The Expedition</a>
+            <a href="#">About Eldoria</a>
+            <a href="#">FAQ</a>
+        </div>
+        <span class="nav-lang">EN ▾</span>
+    </nav>
 
-        <form id="expeditionForm" enctype="multipart/form-data" novalidate>
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Register for the Expedition</p>
+            <h1 class="hero-title">In Search of<br><span class="hero-accent">Eldoria</span></h1>
+            <div class="hero-divider"></div>
+            <p class="hero-desc">Join an expedition to uncover the lost civilization of Eldoria.</p>
+            <a href="#application-form" class="cta-btn">Begin Your Application ↓</a>
+        </div>
+    </section>
 
-            <!-- Personal Information -->
-            <fieldset>
-                <legend>Personal Information</legend>
+    <!-- ========== MAIN LAYOUT ========== -->
+    <div class="app-layout">
 
-                <div class="form-group">
-                    <label for="fullName">Full Name <span class="required-mark">*</span></label>
-                    <input type="text" id="fullName" name="fullName" placeholder="e.g., Peter Ford" required>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="progress-tracker">
+                <h3 class="sidebar-heading">Application Progress</h3>
+                <ul class="progress-steps">
+                    <li class="step active"><span class="step-dot"></span> Personal Information</li>
+                    <li class="step"><span class="step-dot"></span> Experience</li>
+                    <li class="step"><span class="step-dot"></span> Preferences</li>
+                    <li class="step"><span class="step-dot"></span> Documents</li>
+                    <li class="step"><span class="step-dot"></span> Final Notes</li>
+                </ul>
+                <div class="progress-bar-wrap">
+                    <div class="progress-bar" style="width: 0%"></div>
                 </div>
-
-                <div class="form-group">
-                    <label for="email">Email <span class="required-mark">*</span></label>
-                    <input type="email" id="email" name="email" placeholder="e.g., test@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="contactNumber">Contact Number <span class="required-mark">*</span></label>
-                    <input type="tel" id="contactNumber" name="contactNumber" pattern="[0-9\-\+]{7,15}" placeholder="e.g., +1234567890" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="dob">Date of Birth <span class="required-mark">*</span></label>
-                    <input type="date" id="dob" name="dob" required>
-                </div>
-            </fieldset>
-
-            <!-- Experience & Role -->
-            <fieldset>
-                <legend>Experience &amp; Role</legend>
-
-                <div class="form-group">
-                    <label for="experience">Archaeology Experience</label>
-                    <select id="experience" name="experience">
-                        <option>No experience</option>
-                        <option>Amateur (up to 1 year)</option>
-                        <option>Intermediate (1–5 years)</option>
-                        <option>Professional (more than 5 years)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Preferred Role in the Expedition</label>
-                    <div class="checkbox-group">
-                        <label class="check-label">
-                            <input type="checkbox" name="role" value="Researcher"> Researcher
-                        </label>
-                        <label class="check-label">
-                            <input type="checkbox" name="role" value="Photographer"> Photographer
-                        </label>
-                        <label class="check-label">
-                            <input type="checkbox" name="role" value="Drone Operator"> Drone Operator
-                        </label>
-                        <label class="check-label">
-                            <input type="checkbox" name="role" value="Cartographer"> Cartographer
-                        </label>
-                        <label class="check-label">
-                            <input type="checkbox" name="role" value="Medic"> Medic
-                        </label>
-                        <label class="check-label">
-                            <input type="checkbox" name="role" value="Logistician"> Logistician
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Preferred Expedition Region <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="region" value="South America" required> South America
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="region" value="Africa"> Africa
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="region" value="Asia"> Asia
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="region" value="Europe"> Europe
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="region" value="Australia"> Australia
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <!-- Preferences -->
-            <fieldset>
-                <legend>Preferences</legend>
-
-                <div class="form-group">
-                    <label for="salary">Desired Salary per Week ($): <strong id="salaryValue">10</strong></label>
-                    <input type="range" id="salary" name="salary" min="-1" max="1700" value="700">
-                </div>
-
-                <div class="form-group">
-                    <label for="contactMethod">Preferred Contact Method</label>
-                    <select id="contactMethod" name="contactMethod">
-                        <option>Email</option>
-                        <option>Phone</option>
-                        <option>WhatsApp</option>
-                        <option>Telegram</option>
-                    </select>
-                </div>
-            </fieldset>
-
-            <!-- Documents & Notes -->
-            <fieldset>
-                <legend>Documents &amp; Notes</legend>
-
-                <div class="form-group">
-                    <label for="passport">Upload Passport/ID <span class="required-mark">*</span> <span class="hint">(JPG, PNG, PDF)</span></label>
-                    <input type="file" id="passport" name="passport" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx,.avi,.mp3,.mp4" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="comments">Additional Comments</label>
-                    <textarea id="comments" name="comments" rows="4" placeholder="Any special requirements or notes…"></textarea>
-                </div>
-            </fieldset>
-
-            <!-- Agreement -->
-            <div class="form-group terms-group">
-                <label class="check-label">
-                    <input type="checkbox" id="terms" required>
-                    I agree to the Terms and Conditions <span class="required-mark">*</span>
-                </label>
+                <p class="progress-label"><span id="progressPercent">0</span>% Complete</p>
             </div>
 
-            <div class="form-actions">
-                <button type="submit">Submit Registration</button>
-                <button type="reset" class="btn-reset">Clear Form</button>
+            <div class="mission-card">
+                <div class="mission-compass">⊕</div>
+                <h4 class="mission-title">Our Mission</h4>
+                <p class="mission-text">To explore the world's most remote regions and uncover the forgotten stories of humanity.</p>
             </div>
-        </form>
-    </main>
 
-    <footer>
-        <p>นายนฤบดี บุญมา 66040233145 — Expedition Eldoria Registration</p>
+            <p class="student-credit">นายนฤบดี บุญมา<br>66040233145</p>
+        </aside>
+
+        <!-- Form -->
+        <main class="form-container" id="application-form">
+            <h2 class="form-main-title">Application Form</h2>
+            <p class="form-subtitle">Please provide accurate information. Incomplete applications may not be considered.</p>
+
+            <form id="expeditionForm" enctype="multipart/form-data" novalidate>
+
+                <!-- 01 PERSONAL INFORMATION -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">01</span>
+                        <h3 class="section-title">Personal Information</h3>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">Full Name <span class="req">*</span></label>
+                            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email <span class="req">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactNumber">Contact Number <span class="req">*</span></label>
+                            <div class="phone-input">
+                                <select class="country-code" aria-label="Country code">
+                                    <option>+66</option>
+                                    <option>+1</option>
+                                    <option>+44</option>
+                                    <option>+65</option>
+                                    <option>+81</option>
+                                    <option>+91</option>
+                                </select>
+                                <input type="tel" id="contactNumber" name="contactNumber" pattern="[0-9\-\+]{7,15}" placeholder="Enter your contact number" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth <span class="req">*</span></label>
+                            <input type="date" id="dob" name="dob" required>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 02 EXPERIENCE -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">02</span>
+                        <h3 class="section-title">Experience</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Archaeology Experience <span class="req">*</span></label>
+                        <select id="experience" name="experience">
+                            <option value="" disabled selected>Select your experience level</option>
+                            <option>No experience</option>
+                            <option>Amateur (up to 1 year)</option>
+                            <option>Intermediate (1–5 years)</option>
+                            <option>Professional (more than 5 years)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Role in the Expedition <span class="req">*</span></label>
+                        <p class="field-hint">Select the role that best fits you.</p>
+                        <div class="role-grid">
+                            <label class="role-card">
+                                <input type="checkbox" name="role" value="Researcher">
+                                <div class="role-card-inner">
+                                    <span class="role-icon">🔬</span>
+                                    <strong>Researcher</strong>
+                                    <small>Historical analysis and investigation</small>
+                                </div>
+                            </label>
+                            <label class="role-card">
+                                <input type="checkbox" name="role" value="Photographer">
+                                <div class="role-card-inner">
+                                    <span class="role-icon">📷</span>
+                                    <strong>Photographer</strong>
+                                    <small>Documenting sites and discoveries</small>
+                                </div>
+                            </label>
+                            <label class="role-card">
+                                <input type="checkbox" name="role" value="Drone Operator">
+                                <div class="role-card-inner">
+                                    <span class="role-icon">🛩️</span>
+                                    <strong>Drone Operator</strong>
+                                    <small>Aerial mapping and surveying</small>
+                                </div>
+                            </label>
+                            <label class="role-card">
+                                <input type="checkbox" name="role" value="Cartographer">
+                                <div class="role-card-inner">
+                                    <span class="role-icon">🗺️</span>
+                                    <strong>Cartographer</strong>
+                                    <small>Mapping terrains and conditions</small>
+                                </div>
+                            </label>
+                            <label class="role-card">
+                                <input type="checkbox" name="role" value="Medic">
+                                <div class="role-card-inner">
+                                    <span class="role-icon">⚕️</span>
+                                    <strong>Medic</strong>
+                                    <small>Medical support and first aid</small>
+                                </div>
+                            </label>
+                            <label class="role-card">
+                                <input type="checkbox" name="role" value="Logistician">
+                                <div class="role-card-inner">
+                                    <span class="role-icon">📦</span>
+                                    <strong>Logistician</strong>
+                                    <small>Managing supplies and operations</small>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 03 PREFERENCES -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">03</span>
+                        <h3 class="section-title">Preferences</h3>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Preferred Expedition Region <span class="req">*</span></label>
+                            <p class="field-hint">Choose your preferred region.</p>
+                            <div class="radio-list">
+                                <label class="radio-option"><input type="radio" name="region" value="South America" required> South America</label>
+                                <label class="radio-option"><input type="radio" name="region" value="Africa"> Africa</label>
+                                <label class="radio-option"><input type="radio" name="region" value="Asia"> Asia</label>
+                                <label class="radio-option"><input type="radio" name="region" value="Europe"> Europe</label>
+                                <label class="radio-option"><input type="radio" name="region" value="Australia"> Australia</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="salary">Desired Salary per Week <span class="req">*</span></label>
+                            <p class="field-hint">Select your expected salary range.</p>
+                            <input type="range" id="salary" name="salary" min="-1" max="1700" value="700">
+                            <div class="range-labels">
+                                <span>$-1</span>
+                                <strong class="range-current">$<span id="salaryValue">10</span></strong>
+                                <span>$1,700</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactMethod">Preferred Contact Method <span class="req">*</span></label>
+                        <p class="field-hint">How would you like us to contact you?</p>
+                        <select id="contactMethod" name="contactMethod">
+                            <option value="" disabled selected>Select contact method</option>
+                            <option>Email</option>
+                            <option>Phone</option>
+                            <option>WhatsApp</option>
+                            <option>Telegram</option>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- 04 DOCUMENTS -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">04</span>
+                        <h3 class="section-title">Documents</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passport">Upload Passport / ID <span class="req">*</span></label>
+                        <p class="field-hint">Upload a clear copy of your passport or ID.</p>
+                        <div class="upload-zone" id="uploadZone">
+                            <div class="upload-icon">📄</div>
+                            <p>Drag &amp; drop your file here<br><span class="upload-or">or</span></p>
+                            <label for="passport" class="upload-btn">Choose File</label>
+                            <input type="file" id="passport" name="passport" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx,.avi,.mp3,.mp4" required hidden>
+                            <p class="upload-hint">PDF, JPG, PNG (Max 10MB)</p>
+                            <p class="upload-filename" id="uploadFilename"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 05 FINAL NOTES -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">05</span>
+                        <h3 class="section-title">Final Notes</h3>
+                    </div>
+
+                    <div class="form-row form-row-end">
+                        <div class="form-group">
+                            <label for="comments">Additional Comments</label>
+                            <p class="field-hint">Add any additional information about yourself.</p>
+                            <textarea id="comments" name="comments" rows="5" maxlength="500" placeholder="Tell us anything else that might help us know you better..."></textarea>
+                            <span class="char-count"><span id="charCount">0</span> / 500</span>
+                        </div>
+                        <div class="form-group terms-col">
+                            <label class="terms-label">I Agree to the Terms and Conditions <span class="req">*</span></label>
+                            <label class="check-option terms-check">
+                                <input type="checkbox" id="terms" required>
+                                I have read and agreed to the <a href="#" class="terms-link">terms and conditions</a>.
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ACTIONS -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Submit Registration →</button>
+                    <button type="reset" class="btn-reset">Clear Form</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">
+                    <svg class="compass-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polygon points="12,2 14.5,9.5 12,8 9.5,9.5" fill="currentColor" stroke="none"/>
+                        <polygon points="12,22 9.5,14.5 12,16 14.5,14.5" fill="currentColor" stroke="none" opacity="0.4"/>
+                    </svg>
+                    Eldoria
+                </span>
+                <p class="footer-tagline">Explore · Discover · Preserve</p>
+            </div>
+            <div class="footer-nav">
+                <a href="#">The Expedition</a>
+                <a href="#">About Eldoria</a>
+                <a href="#">FAQ</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-social">
+                <p class="footer-social-label">Follow Our Journey</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram">○</a>
+                    <a href="#" aria-label="YouTube">▶</a>
+                    <a href="#" aria-label="Twitter">✕</a>
+                    <a href="#" aria-label="Email">✉</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Eldoria Expedition · นายนฤบดี บุญมา 66040233145 · All rights reserved.</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>
