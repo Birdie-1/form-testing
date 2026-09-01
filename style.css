@@ -56,41 +56,74 @@ a {
 }
 
 /* ============================================
-   Page Header
+   Page Header — logo left, info right, accent bar
    ============================================ */
 .page-header {
     background: var(--dark-brown);
     color: var(--cream);
-    padding: 40px 40px 36px;
-    text-align: center;
 }
 
-.page-title {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: rgba(245, 240, 232, 0.5);
-    margin-bottom: 4px;
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 32px;
 }
 
-.page-title-accent {
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-logo {
+    color: var(--gold);
+    flex-shrink: 0;
+}
+
+.header-title {
     font-family: var(--font-serif);
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-weight: 700;
+    letter-spacing: 0.04em;
     line-height: 1.2;
 }
 
-.page-title-accent span {
-    color: var(--gold-light);
-    font-style: italic;
+.header-title-thin {
+    font-weight: 400;
+    opacity: 0.7;
 }
 
-.page-credit {
+.header-tagline {
+    font-size: 0.68rem;
+    color: rgba(245, 240, 232, 0.4);
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+}
+
+.header-info {
+    text-align: right;
+}
+
+.header-page-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(245, 240, 232, 0.6);
+}
+
+.header-credit {
     font-size: 0.72rem;
     color: rgba(245, 240, 232, 0.35);
-    margin-top: 12px;
+    margin-top: 2px;
+}
+
+.header-accent {
+    height: 3px;
+    background: linear-gradient(to right, var(--gold), var(--gold-light), transparent);
 }
 
 /* ============================================
@@ -672,17 +705,90 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ============================================
-   Footer
+   Footer — 3 columns: brand, links, credit
    ============================================ */
 .footer {
     background: var(--dark-brown);
-    padding: 16px 32px;
+    color: rgba(245, 240, 232, 0.7);
+    margin-top: auto;
+}
+
+.footer-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 32px 28px;
+    gap: 32px;
+}
+
+.footer-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-logo-icon {
+    color: var(--gold);
+}
+
+.footer-logo-text {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+}
+
+.footer-tagline {
+    font-size: 0.68rem;
+    color: rgba(245, 240, 232, 0.35);
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-links a {
+    font-size: 0.75rem;
+    color: rgba(245, 240, 232, 0.5);
+    letter-spacing: 0.03em;
+    transition: color 0.15s;
+}
+
+.footer-links a:hover {
+    color: var(--gold-light);
+}
+
+.footer-credit {
+    text-align: right;
+}
+
+.footer-credit-name {
+    font-size: 0.78rem;
+    color: rgba(245, 240, 232, 0.5);
+    font-weight: 500;
+}
+
+.footer-credit-id {
+    font-size: 0.7rem;
+    color: rgba(245, 240, 232, 0.3);
+    margin-top: 2px;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(245, 240, 232, 0.08);
+    padding: 14px 32px;
     text-align: center;
 }
 
-.footer p {
-    font-size: 0.7rem;
-    color: rgba(245, 240, 232, 0.35);
+.footer-bottom p {
+    font-size: 0.68rem;
+    color: rgba(245, 240, 232, 0.25);
 }
 
 /* ============================================
@@ -709,12 +815,19 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 560px) {
-    .page-header {
-        padding: 28px 20px 24px;
+    .header-inner {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 16px 20px;
     }
 
-    .page-title-accent {
-        font-size: 1.5rem;
+    .header-brand {
+        justify-content: center;
+    }
+
+    .header-info {
+        text-align: center;
     }
 
     .form-row {
@@ -736,5 +849,23 @@ input[type="range"]::-moz-range-thumb {
     .btn-submit, .btn-reset {
         flex: none;
         width: 100%;
+    }
+
+    .footer-main {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+        padding: 28px 20px 20px;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .footer-credit {
+        text-align: center;
     }
 }
