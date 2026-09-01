@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register for the Expedition — Eldoria</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <p class="student-id">นายนฤบดี บุญมา 66040233145</p>
+    </header>
+
+    <main>
+        <h1>Register for the expedition in search of Eldoria</h1>
+        <p class="subtitle">Fill in your details to join the archaeological expedition. Fields marked with <span class="required-mark">*</span> are required.</p>
+
+        <form id="expeditionForm" enctype="multipart/form-data" novalidate>
+
+            <!-- Personal Information -->
+            <fieldset>
+                <legend>Personal Information</legend>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name <span class="required-mark">*</span></label>
+                    <input type="text" id="fullName" name="fullName" placeholder="e.g., Peter Ford" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email <span class="required-mark">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="e.g., test@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactNumber">Contact Number <span class="required-mark">*</span></label>
+                    <input type="tel" id="contactNumber" name="contactNumber" pattern="[0-9\-\+]{7,15}" placeholder="e.g., +1234567890" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth <span class="required-mark">*</span></label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+            </fieldset>
+
+            <!-- Experience & Role -->
+            <fieldset>
+                <legend>Experience &amp; Role</legend>
+
+                <div class="form-group">
+                    <label for="experience">Archaeology Experience</label>
+                    <select id="experience" name="experience">
+                        <option>No experience</option>
+                        <option>Amateur (up to 1 year)</option>
+                        <option>Intermediate (1–5 years)</option>
+                        <option>Professional (more than 5 years)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Role in the Expedition</label>
+                    <div class="checkbox-group">
+                        <label class="check-label">
+                            <input type="checkbox" name="role" value="Researcher"> Researcher
+                        </label>
+                        <label class="check-label">
+                            <input type="checkbox" name="role" value="Photographer"> Photographer
+                        </label>
+                        <label class="check-label">
+                            <input type="checkbox" name="role" value="Drone Operator"> Drone Operator
+                        </label>
+                        <label class="check-label">
+                            <input type="checkbox" name="role" value="Cartographer"> Cartographer
+                        </label>
+                        <label class="check-label">
+                            <input type="checkbox" name="role" value="Medic"> Medic
+                        </label>
+                        <label class="check-label">
+                            <input type="checkbox" name="role" value="Logistician"> Logistician
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Expedition Region <span class="required-mark">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="region" value="South America" required> South America
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="region" value="Africa"> Africa
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="region" value="Asia"> Asia
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="region" value="Europe"> Europe
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="region" value="Australia"> Australia
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Preferences -->
+            <fieldset>
+                <legend>Preferences</legend>
+
+                <div class="form-group">
+                    <label for="salary">Desired Salary per Week ($): <strong id="salaryValue">10</strong></label>
+                    <input type="range" id="salary" name="salary" min="-1" max="1700" value="700">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMethod">Preferred Contact Method</label>
+                    <select id="contactMethod" name="contactMethod">
+                        <option>Email</option>
+                        <option>Phone</option>
+                        <option>WhatsApp</option>
+                        <option>Telegram</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <!-- Documents & Notes -->
+            <fieldset>
+                <legend>Documents &amp; Notes</legend>
+
+                <div class="form-group">
+                    <label for="passport">Upload Passport/ID <span class="required-mark">*</span> <span class="hint">(JPG, PNG, PDF)</span></label>
+                    <input type="file" id="passport" name="passport" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx,.avi,.mp3,.mp4" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Additional Comments</label>
+                    <textarea id="comments" name="comments" rows="4" placeholder="Any special requirements or notes…"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Agreement -->
+            <div class="form-group terms-group">
+                <label class="check-label">
+                    <input type="checkbox" id="terms" required>
+                    I agree to the Terms and Conditions <span class="required-mark">*</span>
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">Submit Registration</button>
+                <button type="reset" class="btn-reset">Clear Form</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <p>นายนฤบดี บุญมา 66040233145 — Expedition Eldoria Registration</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
