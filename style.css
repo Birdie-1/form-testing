@@ -397,6 +397,29 @@ textarea:focus {
     box-shadow: 0 0 0 3px rgba(139, 125, 60, 0.12);
 }
 
+.input-error,
+.has-error input,
+.has-error select,
+.has-error textarea {
+    border-color: var(--red) !important;
+    background: #fff8f8 !important;
+}
+
+.input-error:focus,
+.has-error input:focus,
+.has-error select:focus,
+.has-error textarea:focus {
+    box-shadow: 0 0 0 3px rgba(155, 44, 44, 0.15) !important;
+}
+
+.field-error-msg {
+    color: var(--red);
+    font-size: 0.73rem;
+    margin-top: 5px;
+    display: block;
+    font-weight: 500;
+}
+
 textarea {
     resize: vertical;
     min-height: 100px;
@@ -457,6 +480,11 @@ textarea {
 .role-card input:checked + .role-card-inner {
     border-color: var(--gold);
     background: rgba(139, 125, 60, 0.08);
+}
+
+.role-grid.has-error .role-card-inner {
+    border-color: var(--red);
+    background: rgba(155, 44, 44, 0.03);
 }
 
 .role-card-inner:hover {
@@ -563,7 +591,13 @@ input[type="range"]::-moz-range-thumb {
     padding: 28px 20px;
     text-align: center;
     background: var(--cream);
+    cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
+}
+
+.upload-zone.has-error {
+    border-color: var(--red) !important;
+    background: rgba(155, 44, 44, 0.04);
 }
 
 .upload-zone.dragover {

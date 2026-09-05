@@ -104,7 +104,7 @@
                         </div>
                         <div class="form-group">
                             <label for="dob">Date of Birth <span class="req">*</span></label>
-                            <input type="date" id="dob" name="dob" required>
+                            <input type="date" id="dob" name="dob" min="1924-01-01" required>
                         </div>
                     </div>
                 </section>
@@ -118,7 +118,7 @@
 
                     <div class="form-group">
                         <label for="experience">Archaeology Experience <span class="req">*</span></label>
-                        <select id="experience" name="experience">
+                        <select id="experience" name="experience" required>
                             <option value="" disabled selected>Select your experience level</option>
                             <option>No experience</option>
                             <option>Amateur (up to 1 year)</option>
@@ -205,10 +205,10 @@
                         <div class="form-group">
                             <label for="salary">Desired Salary per Week <span class="req">*</span></label>
                             <p class="field-hint">Select your expected salary range.</p>
-                            <input type="range" id="salary" name="salary" min="-1" max="1700" value="700">
+                            <input type="range" id="salary" name="salary" min="0" max="1700" value="700">
                             <div class="range-labels">
-                                <span>$-1</span>
-                                <strong class="range-current">$<span id="salaryValue">10</span></strong>
+                                <span>$0</span>
+                                <strong class="range-current">$<span id="salaryValue">700</span></strong>
                                 <span>$1,700</span>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                     <div class="form-group">
                         <label for="contactMethod">Preferred Contact Method <span class="req">*</span></label>
                         <p class="field-hint">How would you like us to contact you?</p>
-                        <select id="contactMethod" name="contactMethod">
+                        <select id="contactMethod" name="contactMethod" required>
                             <option value="" disabled selected>Select contact method</option>
                             <option>Email</option>
                             <option>Phone</option>
@@ -241,7 +241,7 @@
                             <div class="upload-icon">📄</div>
                             <p>Drag &amp; drop your file here<br><span class="upload-or">or</span></p>
                             <label for="passport" class="upload-btn">Choose File</label>
-                            <input type="file" id="passport" name="passport" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx,.avi,.mp3,.mp4" required hidden>
+                            <input type="file" id="passport" name="passport" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required hidden>
                             <p class="upload-hint">PDF, JPG, PNG (Max 10MB)</p>
                             <p class="upload-filename" id="uploadFilename"></p>
                         </div>
