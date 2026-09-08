@@ -350,11 +350,13 @@ if (form) {
 
     if (emailInput) {
         emailInput.addEventListener("input", function () {
-            const val = emailInput.value.trim();
-            // Validate immediately on input if invalid chars typed, or >100, or already has error
-            if (/[^\x00-\x7F]/.test(val) || emailInput.value.length > 100 || emailInput.classList.contains("input-error")) {
-                validateEmailLive(false);
-            }
+            validateEmailLive(false);
+        });
+        emailInput.addEventListener("compositionend", function () {
+            validateEmailLive(false);
+        });
+        emailInput.addEventListener("keyup", function () {
+            validateEmailLive(false);
         });
         emailInput.addEventListener("blur", function () {
             validateEmailLive(true);
@@ -419,12 +421,13 @@ if (form) {
         updateProgress();
     });
 
-    form.addEventListener("change", function (e) {
-        if (e.target !== fullNameInput && e.target !== emailInput && e.target !== phoneInput && e.target.classList.contains("input-error")) {
-            clearFieldError(e.target);
-        }
+    // Initial validation for restored/cached input values on page load
+    setTimeout(function () {
+        if (fullNameInput && fullNameInput.value) validateFullNameLive(false);
+        if (emailInput && emailInput.value) validateEmailLive(false);
+        if (phoneInput && phoneInput.value) validatePhoneLive(false);
         updateProgress();
-    });
+    }, 100);
 
     form.addEventListener("submit", function (e) {
         e.preventDefault();
