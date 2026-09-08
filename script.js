@@ -291,6 +291,8 @@ if (form) {
         const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
         if (!email) {
             markInvalid(emailInput, "Email address is required.");
+        } else if (email.length > 100) {
+            markInvalid(emailInput, "Email address must not exceed 100 characters.");
         } else if (!emailRegex.test(email) || !email.includes(".") || email.split(".").pop().length < 2) {
             markInvalid(emailInput, "Please enter a valid email address (e.g. name@domain.com).");
         }
