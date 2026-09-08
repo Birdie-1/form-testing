@@ -182,8 +182,12 @@ function checkSectionComplete(index) {
             const email = document.getElementById("email").value.trim();
             const phone = document.getElementById("contactNumber").value.trim();
             const dob = document.getElementById("dob").value;
-            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-            return name.length >= 2 && emailRegex.test(email) && phone.replace(/[^0-9]/g, "").length >= 7 && Boolean(dob);
+            const nameValid = name.length >= 2 && name.length <= 50 && /^[a-zA-Z\u0E00-\u0E7F\u0400-\u04FF\s'\-]+$/.test(name);
+            const phoneDigits = phone.replace(/[^0-9]/g, "");
+            const phoneValid = /^[0-9\-\+\s]+$/.test(phone) && phone.length <= 15 && phoneDigits.length >= 7 && phoneDigits.length <= 15;
+            const strictEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,10}$/;
+            const emailValid = email.length <= 100 && !/[^\x00-\x7F]/.test(email) && strictEmailRegex.test(email);
+            return nameValid && emailValid && phoneValid && Boolean(dob);
         }
         case 1: { // Experience & Role
             const exp = document.getElementById("experience").value;
@@ -247,53 +251,137 @@ window.addEventListener("scroll", function () {
 // 7. Form Submission & Comprehensive Validation
 // ============================================
 if (form) {
-    const liveEmailInput = document.getElementById("email");
-    if (liveEmailInput) {
-        function validateEmailLive() {
-            const emailVal = liveEmailInput.value.trim();
-            if (!emailVal) {
-                setFieldError(liveEmailInput, "Email address is required.");
-                return false;
-            }
-            if (emailVal.length > 100) {
-                setFieldError(liveEmailInput, "Email address must not exceed 100 characters.");
-                return false;
-            }
-            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-            if (!emailRegex.test(emailVal) || !emailVal.includes(".") || emailVal.split(".").pop().length < 2) {
-                setFieldError(liveEmailInput, "Please enter a valid email address (e.g. name@domain.com).");
-                return false;
-            }
-            clearFieldError(liveEmailInput);
-            return true;
-        }
+    const fullNameInput = document.getElementById("fullName");
+    const emailInput = document.getElementById("email");
+    const phoneInput = document.getElementById("contactNumber");
 
-        liveEmailInput.addEventListener("blur", validateEmailLive);
-        liveEmailInput.addEventListener("input", function () {
-            const val = liveEmailInput.value.trim();
-            if (val.length >= 95 || liveEmailInput.classList.contains("input-error")) {
-                validateEmailLive();
+    // 1. Full Name Live Validation
+    const nameRegex = /^[a-zA-Z\u0E00-\u0E7F\u0400-\u04FF\s'\-]+$/;
+
+    function validateFullNameLive(showEmpty = false) {
+        if (!fullNameInput) return true;
+        const val = fullNameInput.value.trim();
+        if (!val) {
+            if (showEmpty) setFieldError(fullNameInput, "Full Name is required.");
+            return false;
+        }
+        if (val.length < 2 || val.length > 50) {
+            setFieldError(fullNameInput, "Full Name must be between 2 and 50 characters.");
+            return false;
+        }
+        if (!nameRegex.test(val)) {
+            setFieldError(fullNameInput, "Numbers and special characters are not permitted.");
+            return false;
+        }
+        clearFieldError(fullNameInput);
+        return true;
+    }
+
+    if (fullNameInput) {
+        fullNameInput.addEventListener("blur", function () {
+            validateFullNameLive(true);
+        });
+        fullNameInput.addEventListener("input", function () {
+            const val = fullNameInput.value;
+            if (fullNameInput.classList.contains("input-error") || /[0-9!@#$%^&*()_+={}\[\]:;"<>,.?/\\|~`]/.test(val) || val.length > 50) {
+                validateFullNameLive(false);
             }
         });
-        liveEmailInput.addEventListener("paste", function (e) {
+    }
+
+    // 2. Email Live Validation (Strict ASCII, No Thai characters, valid domain & TLD)
+    const strictEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,10}$/;
+
+    function validateEmailLive(showEmpty = false) {
+        if (!emailInput) return true;
+        const val = emailInput.value.trim();
+        if (!val) {
+            if (showEmpty) setFieldError(emailInput, "Email address is required.");
+            return false;
+        }
+        if (val.length > 100) {
+            setFieldError(emailInput, "Email address must not exceed 100 characters.");
+            return false;
+        }
+        if (/[^\x00-\x7F]/.test(val)) {
+            setFieldError(emailInput, "Email cannot contain Thai or special characters.");
+            return false;
+        }
+        if (!strictEmailRegex.test(val)) {
+            setFieldError(emailInput, "Please enter a valid email address (e.g. name@domain.com).");
+            return false;
+        }
+        clearFieldError(emailInput);
+        return true;
+    }
+
+    if (emailInput) {
+        emailInput.addEventListener("blur", function () {
+            validateEmailLive(true);
+        });
+        emailInput.addEventListener("input", function () {
+            const val = emailInput.value.trim();
+            // Validate immediately when user types Thai/invalid chars, or types @, or reaches 100 chars, or already has error
+            if (emailInput.classList.contains("input-error") || /[^\x00-\x7F]/.test(val) || val.includes("@") || val.length >= 100) {
+                validateEmailLive(false);
+            }
+        });
+        emailInput.addEventListener("paste", function (e) {
             const text = (e.clipboardData || window.clipboardData).getData("text");
-            if (text && text.length > 100) {
+            if (text && (text.length > 100 || /[^\x00-\x7F]/.test(text))) {
                 setTimeout(function () {
-                    setFieldError(liveEmailInput, "Email address exceeds maximum 100 characters (truncated).");
-                }, 20);
+                    validateEmailLive(false);
+                }, 10);
+            }
+        });
+    }
+
+    // 3. Contact Number Live Validation
+    function validatePhoneLive(showEmpty = false) {
+        if (!phoneInput) return true;
+        const val = phoneInput.value.trim();
+        if (!val) {
+            if (showEmpty) setFieldError(phoneInput, "Contact number is required.");
+            return false;
+        }
+        if (val.length > 15) {
+            setFieldError(phoneInput, "Contact number must not exceed 15 characters.");
+            return false;
+        }
+        if (!/^[0-9\-\+\s]+$/.test(val)) {
+            setFieldError(phoneInput, "Only digits, '+', '-', and spaces are permitted.");
+            return false;
+        }
+        const digits = val.replace(/[^0-9]/g, "");
+        if (digits.length < 7 || digits.length > 15) {
+            setFieldError(phoneInput, "Contact number must contain between 7 and 15 digits.");
+            return false;
+        }
+        clearFieldError(phoneInput);
+        return true;
+    }
+
+    if (phoneInput) {
+        phoneInput.addEventListener("blur", function () {
+            validatePhoneLive(true);
+        });
+        phoneInput.addEventListener("input", function () {
+            const val = phoneInput.value;
+            if (phoneInput.classList.contains("input-error") || /[^0-9\-\+\s]/.test(val) || val.length > 15) {
+                validatePhoneLive(false);
             }
         });
     }
 
     form.addEventListener("input", function (e) {
-        if (e.target !== liveEmailInput && e.target.classList.contains("input-error")) {
+        if (e.target !== fullNameInput && e.target !== emailInput && e.target !== phoneInput && e.target.classList.contains("input-error")) {
             clearFieldError(e.target);
         }
         updateProgress();
     });
 
     form.addEventListener("change", function (e) {
-        if (e.target !== liveEmailInput && e.target.classList.contains("input-error")) {
+        if (e.target !== fullNameInput && e.target !== emailInput && e.target !== phoneInput && e.target.classList.contains("input-error")) {
             clearFieldError(e.target);
         }
         updateProgress();
@@ -315,35 +403,21 @@ if (form) {
         }
 
         // 1. Full Name
-        const fullNameInput = document.getElementById("fullName");
-        const fullName = fullNameInput.value.trim();
-        if (!fullName) {
-            markInvalid(fullNameInput, "Full Name is required.");
-        } else if (fullName.length < 2) {
-            markInvalid(fullNameInput, "Please enter a valid full name (at least 2 characters).");
+        if (!validateFullNameLive(true)) {
+            hasError = true;
+            if (!firstInvalidElement) firstInvalidElement = fullNameInput;
         }
 
-        // 2. Email (Fix Bug #4: Robust RFC Validation)
-        const emailInput = document.getElementById("email");
-        const email = emailInput.value.trim();
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-        if (!email) {
-            markInvalid(emailInput, "Email address is required.");
-        } else if (email.length > 100) {
-            markInvalid(emailInput, "Email address must not exceed 100 characters.");
-        } else if (!emailRegex.test(email) || !email.includes(".") || email.split(".").pop().length < 2) {
-            markInvalid(emailInput, "Please enter a valid email address (e.g. name@domain.com).");
+        // 2. Email
+        if (!validateEmailLive(true)) {
+            hasError = true;
+            if (!firstInvalidElement) firstInvalidElement = emailInput;
         }
 
-        // 3. Contact Number (Fix Additional Bug: Validate Phone Format)
-        const phoneInput = document.getElementById("contactNumber");
-        const phone = phoneInput.value.trim();
-        const phoneRegex = /^[0-9\-\+\s]{7,15}$/;
-        const digits = phone.replace(/[^0-9]/g, "");
-        if (!phone) {
-            markInvalid(phoneInput, "Contact number is required.");
-        } else if (!phoneRegex.test(phone) || digits.length < 7 || digits.length > 15) {
-            markInvalid(phoneInput, "Please enter a valid phone number (7-15 digits).");
+        // 3. Contact Number
+        if (!validatePhoneLive(true)) {
+            hasError = true;
+            if (!firstInvalidElement) firstInvalidElement = phoneInput;
         }
 
         // 4. Date of Birth (Fix Additional Bug: DOB & Age Validation)
