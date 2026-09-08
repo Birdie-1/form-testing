@@ -258,118 +258,157 @@ if (form) {
     // 1. Full Name Live Validation
     const nameRegex = /^[a-zA-Z\u0E00-\u0E7F\u0400-\u04FF\s'\-]+$/;
 
-    function validateFullNameLive(showEmpty = false) {
+    function validateFullNameLive(isBlurOrSubmit = false) {
         if (!fullNameInput) return true;
-        const val = fullNameInput.value.trim();
+        const rawVal = fullNameInput.value;
+        const val = rawVal.trim();
+
         if (!val) {
-            if (showEmpty) setFieldError(fullNameInput, "Full Name is required.");
+            if (isBlurOrSubmit) {
+                setFieldError(fullNameInput, "Full Name is required.");
+            } else {
+                clearFieldError(fullNameInput);
+            }
             return false;
         }
-        if (val.length < 2 || val.length > 50) {
-            setFieldError(fullNameInput, "Full Name must be between 2 and 50 characters.");
-            return false;
-        }
+
+        // Check for special characters or numbers immediately on every input
         if (!nameRegex.test(val)) {
             setFieldError(fullNameInput, "Numbers and special characters are not permitted.");
             return false;
         }
+
+        if (rawVal.length > 50) {
+            setFieldError(fullNameInput, "Full Name must not exceed 50 characters.");
+            return false;
+        }
+
+        if (val.length < 2) {
+            if (isBlurOrSubmit) {
+                setFieldError(fullNameInput, "Full Name must be between 2 and 50 characters.");
+                return false;
+            }
+            clearFieldError(fullNameInput);
+            return false;
+        }
+
         clearFieldError(fullNameInput);
         return true;
     }
 
     if (fullNameInput) {
+        fullNameInput.addEventListener("input", function () {
+            validateFullNameLive(false);
+        });
         fullNameInput.addEventListener("blur", function () {
             validateFullNameLive(true);
-        });
-        fullNameInput.addEventListener("input", function () {
-            const val = fullNameInput.value;
-            if (fullNameInput.classList.contains("input-error") || /[0-9!@#$%^&*()_+={}\[\]:;"<>,.?/\\|~`]/.test(val) || val.length > 50) {
-                validateFullNameLive(false);
-            }
         });
     }
 
     // 2. Email Live Validation (Strict ASCII, No Thai characters, valid domain & TLD)
     const strictEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,10}$/;
 
-    function validateEmailLive(showEmpty = false) {
+    function validateEmailLive(isBlurOrSubmit = false) {
         if (!emailInput) return true;
-        const val = emailInput.value.trim();
+        const rawVal = emailInput.value;
+        const val = rawVal.trim();
+
         if (!val) {
-            if (showEmpty) setFieldError(emailInput, "Email address is required.");
+            if (isBlurOrSubmit) {
+                setFieldError(emailInput, "Email address is required.");
+            } else {
+                clearFieldError(emailInput);
+            }
             return false;
         }
-        if (val.length > 100) {
+
+        if (rawVal.length > 100) {
             setFieldError(emailInput, "Email address must not exceed 100 characters.");
             return false;
         }
+
         if (/[^\x00-\x7F]/.test(val)) {
-            setFieldError(emailInput, "Email cannot contain Thai or special characters.");
+            setFieldError(emailInput, "Email cannot contain Thai or non-ASCII characters.");
             return false;
         }
-        if (!strictEmailRegex.test(val)) {
-            setFieldError(emailInput, "Please enter a valid email address (e.g. name@domain.com).");
-            return false;
+
+        if (isBlurOrSubmit) {
+            if (!strictEmailRegex.test(val)) {
+                setFieldError(emailInput, "Please enter a valid email address (e.g. name@domain.com).");
+                return false;
+            }
+        } else if (emailInput.classList.contains("input-error")) {
+            if (!strictEmailRegex.test(val)) {
+                setFieldError(emailInput, "Please enter a valid email address (e.g. name@domain.com).");
+                return false;
+            }
         }
+
         clearFieldError(emailInput);
         return true;
     }
 
     if (emailInput) {
-        emailInput.addEventListener("blur", function () {
-            validateEmailLive(true);
-        });
         emailInput.addEventListener("input", function () {
             const val = emailInput.value.trim();
-            // Validate immediately when user types Thai/invalid chars, or types @, or reaches 100 chars, or already has error
-            if (emailInput.classList.contains("input-error") || /[^\x00-\x7F]/.test(val) || val.includes("@") || val.length >= 100) {
+            // Validate immediately on input if invalid chars typed, or >100, or already has error
+            if (/[^\x00-\x7F]/.test(val) || emailInput.value.length > 100 || emailInput.classList.contains("input-error")) {
                 validateEmailLive(false);
             }
         });
-        emailInput.addEventListener("paste", function (e) {
-            const text = (e.clipboardData || window.clipboardData).getData("text");
-            if (text && (text.length > 100 || /[^\x00-\x7F]/.test(text))) {
-                setTimeout(function () {
-                    validateEmailLive(false);
-                }, 10);
-            }
+        emailInput.addEventListener("blur", function () {
+            validateEmailLive(true);
+        });
+        emailInput.addEventListener("paste", function () {
+            setTimeout(function () {
+                validateEmailLive(false);
+            }, 10);
         });
     }
 
     // 3. Contact Number Live Validation
-    function validatePhoneLive(showEmpty = false) {
+    function validatePhoneLive(isBlurOrSubmit = false) {
         if (!phoneInput) return true;
-        const val = phoneInput.value.trim();
+        const rawVal = phoneInput.value;
+        const val = rawVal.trim();
+
         if (!val) {
-            if (showEmpty) setFieldError(phoneInput, "Contact number is required.");
+            if (isBlurOrSubmit) {
+                setFieldError(phoneInput, "Contact number is required.");
+            } else {
+                clearFieldError(phoneInput);
+            }
             return false;
         }
-        if (val.length > 15) {
+
+        if (rawVal.length > 15) {
             setFieldError(phoneInput, "Contact number must not exceed 15 characters.");
             return false;
         }
+
         if (!/^[0-9\-\+\s]+$/.test(val)) {
             setFieldError(phoneInput, "Only digits, '+', '-', and spaces are permitted.");
             return false;
         }
+
         const digits = val.replace(/[^0-9]/g, "");
-        if (digits.length < 7 || digits.length > 15) {
-            setFieldError(phoneInput, "Contact number must contain between 7 and 15 digits.");
-            return false;
+        if (isBlurOrSubmit || phoneInput.classList.contains("input-error")) {
+            if (digits.length < 7 || digits.length > 15) {
+                setFieldError(phoneInput, "Contact number must contain between 7 and 15 digits.");
+                return false;
+            }
         }
+
         clearFieldError(phoneInput);
         return true;
     }
 
     if (phoneInput) {
+        phoneInput.addEventListener("input", function () {
+            validatePhoneLive(false);
+        });
         phoneInput.addEventListener("blur", function () {
             validatePhoneLive(true);
-        });
-        phoneInput.addEventListener("input", function () {
-            const val = phoneInput.value;
-            if (phoneInput.classList.contains("input-error") || /[^0-9\-\+\s]/.test(val) || val.length > 15) {
-                validatePhoneLive(false);
-            }
         });
     }
 
@@ -498,6 +537,9 @@ if (form) {
         }
 
         // Form is 100% valid!
+        const fullName = fullNameInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
         const roleValues = Array.from(selectedRoles).map(r => r.value).join(", ");
         const countryCode = document.querySelector(".country-code").value;
 

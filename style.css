@@ -400,6 +400,10 @@ textarea:focus {
 .input-error,
 input.input-error,
 input.input-error:focus,
+.form-group input.input-error,
+.form-group input.input-error:focus,
+.phone-input input.input-error,
+.phone-input input.input-error:focus,
 select.input-error,
 select.input-error:focus,
 textarea.input-error,
@@ -409,15 +413,16 @@ textarea.input-error:focus,
 .has-error textarea {
     border: 2px solid #b91c1c !important;
     background: #fef2f2 !important;
-    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.2) !important;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.25) !important;
+    outline: none !important;
 }
 
 .field-error-msg {
-    color: var(--red);
+    color: #b91c1c !important;
     font-size: 0.73rem;
     margin-top: 5px;
     display: block;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 textarea {
