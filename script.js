@@ -247,15 +247,53 @@ window.addEventListener("scroll", function () {
 // 7. Form Submission & Comprehensive Validation
 // ============================================
 if (form) {
+    const liveEmailInput = document.getElementById("email");
+    if (liveEmailInput) {
+        function validateEmailLive() {
+            const emailVal = liveEmailInput.value.trim();
+            if (!emailVal) {
+                setFieldError(liveEmailInput, "Email address is required.");
+                return false;
+            }
+            if (emailVal.length > 100) {
+                setFieldError(liveEmailInput, "Email address must not exceed 100 characters.");
+                return false;
+            }
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+            if (!emailRegex.test(emailVal) || !emailVal.includes(".") || emailVal.split(".").pop().length < 2) {
+                setFieldError(liveEmailInput, "Please enter a valid email address (e.g. name@domain.com).");
+                return false;
+            }
+            clearFieldError(liveEmailInput);
+            return true;
+        }
+
+        liveEmailInput.addEventListener("blur", validateEmailLive);
+        liveEmailInput.addEventListener("input", function () {
+            const val = liveEmailInput.value.trim();
+            if (val.length >= 95 || liveEmailInput.classList.contains("input-error")) {
+                validateEmailLive();
+            }
+        });
+        liveEmailInput.addEventListener("paste", function (e) {
+            const text = (e.clipboardData || window.clipboardData).getData("text");
+            if (text && text.length > 100) {
+                setTimeout(function () {
+                    setFieldError(liveEmailInput, "Email address exceeds maximum 100 characters (truncated).");
+                }, 20);
+            }
+        });
+    }
+
     form.addEventListener("input", function (e) {
-        if (e.target.classList.contains("input-error")) {
+        if (e.target !== liveEmailInput && e.target.classList.contains("input-error")) {
             clearFieldError(e.target);
         }
         updateProgress();
     });
 
     form.addEventListener("change", function (e) {
-        if (e.target.classList.contains("input-error")) {
+        if (e.target !== liveEmailInput && e.target.classList.contains("input-error")) {
             clearFieldError(e.target);
         }
         updateProgress();

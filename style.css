@@ -398,18 +398,18 @@ textarea:focus {
 }
 
 .input-error,
+input.input-error,
+input.input-error:focus,
+select.input-error,
+select.input-error:focus,
+textarea.input-error,
+textarea.input-error:focus,
 .has-error input,
 .has-error select,
 .has-error textarea {
-    border-color: var(--red) !important;
-    background: #fff8f8 !important;
-}
-
-.input-error:focus,
-.has-error input:focus,
-.has-error select:focus,
-.has-error textarea:focus {
-    box-shadow: 0 0 0 3px rgba(155, 44, 44, 0.15) !important;
+    border: 2px solid #b91c1c !important;
+    background: #fef2f2 !important;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.2) !important;
 }
 
 .field-error-msg {
